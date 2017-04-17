@@ -3,7 +3,7 @@
 # linux settings after installation
 # =================================
 
-# add iiu account
+# add test account
 useradd -G wheel test_user
 echo 'test_user:qwer1234' | chpasswd
 
@@ -16,6 +16,7 @@ sed -i "28s/7/14/" /etc/login.defs
 # modify ssh configuration
 sed -i "42s/#PermitRootLogin yes/PermitRootLogin no/" /etc/ssh/sshd_config
 sed -i "65s/#PermitEmptyPasswords no/PermitEmptyPasswords no/" /etc/ssh/sshd_config
+sed -i "122s/#UseDNS yes/UseDNS no/" /etc/ssh/sshd_config
 
 # copy repository file
 cp -f /root/CentOS-Base.repo /etc/yum.repos.d
