@@ -1,5 +1,6 @@
 # kickstart dvd
 
+'''
 ├── config
 │   ├── isolinux.cfg
 │   └── ks.cfg
@@ -9,5 +10,4 @@
 │   ├── CentOS-Base.repo
 │   └── post.sh
 └── README.md
-
-
+'''
