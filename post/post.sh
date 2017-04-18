@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# linux settings after installation
+# kickstart post settings
 # =================================
 
-# add test account
+# create account
 useradd -G wheel test_user
 echo 'test_user:qwer1234' | chpasswd
 
@@ -18,5 +18,16 @@ sed -i "42s/#PermitRootLogin yes/PermitRootLogin no/" /etc/ssh/sshd_config
 sed -i "65s/#PermitEmptyPasswords no/PermitEmptyPasswords no/" /etc/ssh/sshd_config
 sed -i "122s/#UseDNS yes/UseDNS no/" /etc/ssh/sshd_config
 
+# disable control+alt+del
+sed -i "9s/start on control-alt-delete/#start on control-alt-delete/" /etc/init/control-alt-delete.conf
+
 # copy repository file
 cp -f /root/CentOS-Base.repo /etc/yum.repos.d
+
+# service disable
+chkconfig --level 3 auditd off
+chkconfig --level 3 iptables off
+chkconfig --level 3 ip6tables off
+chkconfig --level 3 lvm2-monitor off
+chkconfig --level 3 mdmonitor off
+chkconfig --level 3 netfs off

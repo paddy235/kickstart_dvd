@@ -43,6 +43,7 @@ cp ${MOUNT_DIR}/Packages/*.rpm ${BUILD_DIR}/CentOS/
 cp ./config/ks.cfg ${BUILD_DIR}/ks
 cp ./config/isolinux.cfg ${BUILD_DIR}/isolinux
 cp ./post/post.sh ${BUILD_DIR}
+cp ./post/final.sh ${BUILD_DIR}
 cp ./post/CentOS-Base.repo ${BUILD_DIR}
 
 # modify permission
@@ -70,7 +71,7 @@ echo "build done"
 echo "====================================="
 echo 
 
-mv ${WORK_DIR}/${RESULT_FILE} ${BASE_DIR}
+mv -f ${WORK_DIR}/${RESULT_FILE} ${BASE_DIR}
 umount ${MOUNT_DIR}
 rm -rf ${WORK_DIR}
 echo "clear"
