@@ -41,7 +41,7 @@ cp -R ${MOUNT_DIR}/images/* ${BUILD_DIR}/images/
 cp ${MOUNT_DIR}/.discinfo ${BUILD_DIR}/
 cp ${MOUNT_DIR}/Packages/*.rpm ${BUILD_DIR}/CentOS/
 
-cp -f ./config/EFI/BOOT/BOOTX64.conf ${BUILD_DIR}/EFI/BOOT/
+cp -f ./config/BOOTX64.conf ${BUILD_DIR}/EFI/BOOT/
 cp ./config/ks-bios.cfg ${BUILD_DIR}/ks
 cp ./config/ks-efi.cfg ${BUILD_DIR}/ks
 cp ./config/isolinux.cfg ${BUILD_DIR}/isolinux
