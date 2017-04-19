@@ -27,7 +27,7 @@ echo
 echo "start build"
 # make workspace
 mkdir -p ${WORK_DIR}/dvd
-mkdir -p ${BUILD_DIR}/{isolinux,images,ks,CentOS}
+mkdir -p ${BUILD_DIR}/{isolinux,images,ks,CentOS,EFI}
 
 # origin dvd mount
 mount -o loop ./iso/${ISO_FILE} ${MOUNT_DIR}
@@ -35,15 +35,20 @@ mount -o loop ./iso/${ISO_FILE} ${MOUNT_DIR}
 chown -R $USER: ${BUILD_DIR}
 
 # copy data from dvd
+cp -R ${MOUNT_DIR}/EFI/* ${BUILD_DIR}/EFI/
 cp -R ${MOUNT_DIR}/isolinux/* ${BUILD_DIR}/isolinux/
 cp -R ${MOUNT_DIR}/images/* ${BUILD_DIR}/images/
 cp ${MOUNT_DIR}/.discinfo ${BUILD_DIR}/
 cp ${MOUNT_DIR}/Packages/*.rpm ${BUILD_DIR}/CentOS/
 
-cp ./config/ks.cfg ${BUILD_DIR}/ks
+cp -f ./config/EFI/BOOT/BOOTX64.conf ${BUILD_DIR}/EFI/BOOT/
+cp ./config/ks-bios.cfg ${BUILD_DIR}/ks
+cp ./config/ks-efi.cfg ${BUILD_DIR}/ks
 cp ./config/isolinux.cfg ${BUILD_DIR}/isolinux
+
 cp ./post/post.sh ${BUILD_DIR}
 cp ./post/final.sh ${BUILD_DIR}
+cp ./post/ifcfg-eth* ${BUILD_DIR}
 cp ./post/CentOS-Base.repo ${BUILD_DIR}
 
 # modify permission

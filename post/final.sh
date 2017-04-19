@@ -37,14 +37,49 @@ echo
 echo
 sleep 1
 
-
 # final settings after installation 
 # using networking
 # =================================
 
+echo "==== network setting"
+sleep 1
+
+# input
+echo "step1. Public"
+echo -n "IP : "
+read I_ADDRESS
+
+echo -n "Netmask : "
+read I_NETMASK
+
+echo -n "Gateway : "
+read I_GATEWAY
+
+echo "$I_ADDRESS $I_NETMASK $I_GATEWAY"
+
+# interactive network setting
+# add gateway
+echo "GATEWAY=$I_GATEWAY" >> /etc/sysconfig/network
+
+# add public ip address
+cp -f ifcfg-eth0 /etc/sysconfig/network-scripts/ifcfg-eth0
+sed -i "5s/^IPADDR=/IPADDR=$I_ADDRESS/" /etc/sysconfig/network-scripts/ifcfg-eth0
+sed -i "6s/^NETMASK=/NETMASK=$I_NETMASK/" /etc/sysconfig/network-scripts/ifcfg-eth0
+
+# add private ip address
+# cp -f ifcfg-eth1 /etc/sysconfig/network-scripts/ifcfg-eth1
+echo
+
+/etc/init.d/network restart
+echo
+
+ifconfig
+echo
+
 # add DNS
 echo "nameserver 8.8.8.8" > /etc/resolv.conf
 cat /etc/resolv.conf
+echo
 
 # update
 yum -y update
@@ -53,8 +88,15 @@ yum -y update
 yum -y install ntpdate
 echo "0 0 * * * root /usr/sbin/ntpdate tw.pool.ntp.org > /dev/null 2>&1 && /sbin/hwclock -w" >> /etc/crontab
 ntpdate tw.pool.ntp.org
+echo
 date
+echo
 
-# interactive network setting
-# add gateway
-# add ip address
+# clear
+rm -f ifcfg-eth0 ifcfg-eth1
+
+
+passwd test_user
+echo
+
+echo "done"
