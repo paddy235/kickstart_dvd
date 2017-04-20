@@ -22,10 +22,13 @@ sed -i "122s/#UseDNS yes/UseDNS no/" /etc/ssh/sshd_config
 sed -i "9s/start on control-alt-delete/#start on control-alt-delete/" /etc/init/control-alt-delete.conf
 
 # copy repository file
-cp -f /root/CentOS-Base.repo /etc/yum.repos.d
+cp -f /root/post/CentOS-Base.repo /etc/yum.repos.d
 
 # service disable
 chkconfig --level 3 auditd off
+chkconfig --level 3 cpuspeed off
+chkconfig --level 3 kdump off
+chkconfig --level 3 rdma off
 chkconfig --level 3 iptables off
 chkconfig --level 3 ip6tables off
 chkconfig --level 3 lvm2-monitor off
